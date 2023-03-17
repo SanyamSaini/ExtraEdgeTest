@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white">
+
+    <data>
+
+        <variable
+            name="rocket"
+            type="com.extra.edge.test.model.Rocket" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            tools:context=".ui.DetailActivity">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvRocketImages"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:listitem="@layout/item_rocket_image" />
+
+            <TextView
+                android:id="@+id/tvStatus"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:text='@{rocket.active == true? "Status : Active":"Status : Inactive"}'
+                android:textColor="@color/black"
+                android:textSize="@dimen/_14ssp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rvRocketImages" />
+
+            <TextView
+                android:id="@+id/tvCPL"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:text='@{"Cost per launch : "+rocket.cost_per_launch}'
+                android:textColor="@color/black"
+                android:textSize="@dimen/_14ssp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvStatus" />
+
+            <TextView
+                android:id="@+id/tvSRP"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:text='@{"Success Rate Per Launch : "+rocket.success_rate_pct + "%"}'
+                android:textColor="@color/black"
+                android:textSize="@dimen/_14ssp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvCPL" />
+
+            <TextView
+                android:id="@+id/tvDescription"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:text='@{"Description : " + rocket.description}'
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvSRP" />
+
+            <TextView
+                android:id="@+id/tvWiki"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:autoLink="web"
+                android:text="@{String.valueOf(rocket.wikipedia)}"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_14ssp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvDescription" />
+
+            <!--            <TextView-->
+            <!--                android:id="@+id/tvHeight"-->
+            <!--                feet='@{rocket.height.feet}'-->
+            <!--                meters='@{rocket.height.meters}'-->
+            <!--                measureType="height"-->
+            <!--                android:layout_width="0dp"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginStart="@dimen/_8sdp"-->
+            <!--                android:layout_marginTop="@dimen/_4sdp"-->
+            <!--                android:layout_marginEnd="@dimen/_8sdp"-->
+            <!--                android:textColor="@color/black"-->
+            <!--                android:textSize="@dimen/_14ssp"-->
+            <!--                app:layout_constraintEnd_toEndOf="parent"-->
+            <!--                app:layout_constraintStart_toStartOf="parent"-->
+            <!--                app:layout_constraintTop_toBottomOf="@id/tvWiki" />-->
+
+            <!--            <TextView-->
+            <!--                android:id="@+id/tvDiameter"-->
+            <!--                feet='@{rocket.height.feet}'-->
+            <!--                meters='@{rocket.height.meters}'-->
+            <!--                measureType="diameter"-->
+            <!--                android:layout_width="0dp"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginStart="@dimen/_8sdp"-->
+            <!--                android:layout_marginTop="@dimen/_4sdp"-->
+            <!--                android:layout_marginEnd="@dimen/_8sdp"-->
+            <!--                android:textColor="@color/black"-->
+            <!--                android:textSize="@dimen/_14ssp"-->
+            <!--                app:layout_constraintEnd_toEndOf="parent"-->
+            <!--                app:layout_constraintStart_toStartOf="parent"-->
+            <!--                app:layout_constraintTop_toBottomOf="@id/tvHeight" />-->
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>

@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">ExtraEdgeTest</string>
+
+    <string name="name_" formatted="false">Name : %1$s</string>
+    <string name="country_" formatted="false">Country : %1$s</string>
+    <string name="no_of_engines_" formatted="false">No. of Engines : %1$s</string>
 </resources>
