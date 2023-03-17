@@ -2,6 +2,9 @@ package com.extra.edge.test.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -28,6 +31,8 @@ class MainActivity : AppCompatActivity(), RocketAdapter.RocketClickListener {
         mainViewModel = ViewModelProvider(this)[MainViewModel::class.java]
         rocketAdapter = RocketAdapter(this)
 
+        supportActionBar?.title = getString(R.string.rockets)
+
         initRecyView()
     }
 
@@ -39,7 +44,15 @@ class MainActivity : AppCompatActivity(), RocketAdapter.RocketClickListener {
         }
 
         mainViewModel.rockets.observe(this) {
-            rocketAdapter.submitList(it)
+            if (it.isNotEmpty()) {
+                rocketAdapter.submitList(it)
+                binding.rvRockets.visibility = View.VISIBLE
+            } else
+                Handler(mainLooper).post {
+                    Toast.makeText(this, getString(R.string.error_msg), Toast.LENGTH_LONG).show()
+                }
+
+            binding.pbMain.visibility = View.GONE
         }
     }
 

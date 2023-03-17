@@ -4,9 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
-
 @Entity(tableName = "rocket")
-
 data class Rocket(
     @PrimaryKey
     @SerializedName("id")

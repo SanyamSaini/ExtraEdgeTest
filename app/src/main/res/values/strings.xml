@@ -4,4 +4,9 @@
     <string name="name_" formatted="false">Name : %1$s</string>
     <string name="country_" formatted="false">Country : %1$s</string>
     <string name="no_of_engines_" formatted="false">No. of Engines : %1$s</string>
+    <string name="height">height</string>
+    <string name="diameter">diameter</string>
+    <string name="rockets">Rockets</string>
+    <string name="network_error">Network not available!</string>
+    <string name="error_msg">Something went wrong!</string>
 </resources>

@@ -14,7 +14,7 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(val repository: RocketRepository) : ViewModel() {
     init {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.getRockets()
+                repository.getRockets()
         }
     }
 

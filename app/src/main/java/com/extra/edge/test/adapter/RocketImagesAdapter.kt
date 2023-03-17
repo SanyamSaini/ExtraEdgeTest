@@ -18,7 +18,11 @@ class RocketImagesAdapter(private var images: List<String>) :
         fun bind(item: String, context: Context) {
 
             if (item.isNotEmpty())
-                Glide.with(context).load(item).into(ivRocket)
+                Glide.with(context)
+                    .load(item)
+                    .placeholder(R.drawable.placeholder_image)
+                    .error(R.drawable.error_image)
+                    .into(ivRocket)
         }
     }
 
@@ -38,7 +42,7 @@ class RocketImagesAdapter(private var images: List<String>) :
         return images.size
     }
 
-    fun submitList(updateList: List<String>){
+    fun submitList(updateList: List<String>) {
         images = updateList
         notifyDataSetChanged()
     }

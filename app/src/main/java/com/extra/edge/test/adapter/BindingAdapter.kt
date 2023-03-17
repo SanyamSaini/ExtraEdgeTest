@@ -3,12 +3,14 @@ package com.extra.edge.test.adapter
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 
-@BindingAdapter("feet", "meters", "measureType")
-fun setFormattedText(view: TextView, feet: Double, meters: Double, measureType: String) {
+
+@BindingAdapter("measurement", "feet", "meters")
+fun setFormattedText(view: TextView, measurement: String, feet: Double, meters: Double) {
     val inches = meters * 39.37
-    if (measureType == "height") {
-        view.text = "Height feet/inches : $feet/$inches"
+    val inchesString = String.format("%.2f", inches)
+    if (measurement == "height") {
+        view.text = "Height feet/inches : $feet/$inchesString"
     } else {
-        view.text = "Diameter feet/inches : $feet/$inches"
+        view.text = "Diameter feet/inches : $feet/$inchesString"
     }
 }

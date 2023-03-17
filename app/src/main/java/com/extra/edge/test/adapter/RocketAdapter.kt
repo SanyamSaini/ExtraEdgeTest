@@ -31,10 +31,14 @@ class RocketAdapter(private val rocketClickListener: RocketClickListener) :
             tvName.text = context.getString(R.string.name_, item.name)
             tvCountry.text = context.getString(R.string.country_, item.country)
             tvEngineCount.text =
-                context.getString(R.string.no_of_engines_, item.stages.toString())
+                context.getString(R.string.no_of_engines_, item.engines.number.toString())
 
             if (item.flickerImages != null)
-                Glide.with(context).load(item.flickerImages[0]).into(ivRocket)
+                Glide.with(context)
+                    .load(item.flickerImages[0])
+                    .placeholder(R.drawable.placeholder_image)
+                    .error(R.drawable.error_image)
+                    .into(ivRocket)
 
             cvRocketItem.setOnClickListener {
                 rocketClickListener.rocketClick(item)

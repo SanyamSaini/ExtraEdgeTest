@@ -74,6 +74,38 @@
                 app:layout_constraintTop_toBottomOf="@id/tvCPL" />
 
             <TextView
+                android:id="@+id/tvHeight"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_14ssp"
+                app:feet='@{rocket.height.feet}'
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvSRP"
+                app:measurement='@{"height"}'
+                app:meters='@{rocket.height.meters}' />
+
+            <TextView
+                android:id="@+id/tvDiameter"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_14ssp"
+                app:feet='@{rocket.diameter.feet}'
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvHeight"
+                app:measurement='@{"diameter"}'
+                app:meters='@{rocket.diameter.meters}' />
+
+            <TextView
                 android:id="@+id/tvDescription"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -85,7 +117,7 @@
                 android:textSize="@dimen/_12ssp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvSRP" />
+                app:layout_constraintTop_toBottomOf="@id/tvDiameter" />
 
             <TextView
                 android:id="@+id/tvWiki"
@@ -97,42 +129,28 @@
                 android:autoLink="web"
                 android:text="@{String.valueOf(rocket.wikipedia)}"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_14ssp"
+                android:textSize="@dimen/_12ssp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvDescription" />
 
-            <!--            <TextView-->
-            <!--                android:id="@+id/tvHeight"-->
-            <!--                feet='@{rocket.height.feet}'-->
-            <!--                meters='@{rocket.height.meters}'-->
-            <!--                measureType="height"-->
-            <!--                android:layout_width="0dp"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:layout_marginStart="@dimen/_8sdp"-->
-            <!--                android:layout_marginTop="@dimen/_4sdp"-->
-            <!--                android:layout_marginEnd="@dimen/_8sdp"-->
-            <!--                android:textColor="@color/black"-->
-            <!--                android:textSize="@dimen/_14ssp"-->
-            <!--                app:layout_constraintEnd_toEndOf="parent"-->
-            <!--                app:layout_constraintStart_toStartOf="parent"-->
-            <!--                app:layout_constraintTop_toBottomOf="@id/tvWiki" />-->
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/groupDetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:constraint_referenced_ids="rvRocketImages,tvCPL, tvDescription, tvDiameter, tvHeight, tvSRP, tvStatus, tvWiki " />
 
-            <!--            <TextView-->
-            <!--                android:id="@+id/tvDiameter"-->
-            <!--                feet='@{rocket.height.feet}'-->
-            <!--                meters='@{rocket.height.meters}'-->
-            <!--                measureType="diameter"-->
-            <!--                android:layout_width="0dp"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:layout_marginStart="@dimen/_8sdp"-->
-            <!--                android:layout_marginTop="@dimen/_4sdp"-->
-            <!--                android:layout_marginEnd="@dimen/_8sdp"-->
-            <!--                android:textColor="@color/black"-->
-            <!--                android:textSize="@dimen/_14ssp"-->
-            <!--                app:layout_constraintEnd_toEndOf="parent"-->
-            <!--                app:layout_constraintStart_toStartOf="parent"-->
-            <!--                app:layout_constraintTop_toBottomOf="@id/tvHeight" />-->
+            <ProgressBar
+                android:id="@+id/pbDetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </layout>
