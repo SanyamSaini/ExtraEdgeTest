@@ -56,4 +56,11 @@ class RocketRepository @Inject constructor(@ApplicationContext val context: Cont
         }
 
     }
+
+    suspend fun getRocketBackground(){
+        val result = rocketApi.getRockets()
+        if (result?.body() != null) {
+            rocketDatabase.rocketDao().addRocket(result.body()!!)
+        }
+    }
 }

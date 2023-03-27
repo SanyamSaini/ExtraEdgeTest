@@ -10,13 +10,19 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.work.Constraints
+import androidx.work.NetworkType
+import androidx.work.PeriodicWorkRequest
+import androidx.work.WorkManager
 import com.extra.edge.test.R
 import com.extra.edge.test.adapter.RocketAdapter
 import com.extra.edge.test.databinding.ActivityMainBinding
 import com.extra.edge.test.model.Rocket
 import com.extra.edge.test.utils.Constants
 import com.extra.edge.test.viewmodel.MainViewModel
+import com.extra.edge.test.worker.RocketWorker
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.concurrent.TimeUnit
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(), RocketAdapter.RocketClickListener {
@@ -34,6 +40,8 @@ class MainActivity : AppCompatActivity(), RocketAdapter.RocketClickListener {
         supportActionBar?.title = getString(R.string.rockets)
 
         initRecyView()
+
+        setupWorker()
     }
 
     private fun initRecyView() {
@@ -61,5 +69,15 @@ class MainActivity : AppCompatActivity(), RocketAdapter.RocketClickListener {
             Intent(this, DetailActivity::class.java)
                 .putExtra(Constants.ROCKET_ID, item.id)
         )
+    }
+
+    private fun setupWorker() {
+        val constraint = Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()
+
+        val worker = PeriodicWorkRequest.Builder(RocketWorker::class.java, 15, TimeUnit.MINUTES)
+            .setConstraints(constraint)
+            .build()
+
+        WorkManager.getInstance(this).enqueue(worker)
     }
 }
