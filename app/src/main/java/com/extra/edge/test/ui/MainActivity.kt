@@ -18,6 +18,7 @@ import com.extra.edge.test.R
 import com.extra.edge.test.adapter.RocketAdapter
 import com.extra.edge.test.databinding.ActivityMainBinding
 import com.extra.edge.test.model.Rocket
+import com.extra.edge.test.repository.Response
 import com.extra.edge.test.utils.Constants
 import com.extra.edge.test.viewmodel.MainViewModel
 import com.extra.edge.test.worker.RocketWorker
@@ -41,7 +42,7 @@ class MainActivity : AppCompatActivity(), RocketAdapter.RocketClickListener {
 
         initRecyView()
 
-        setupWorker()
+//        setupWorker()
     }
 
     private fun initRecyView() {
@@ -52,15 +53,34 @@ class MainActivity : AppCompatActivity(), RocketAdapter.RocketClickListener {
         }
 
         mainViewModel.rockets.observe(this) {
-            if (it.isNotEmpty()) {
-                rocketAdapter.submitList(it)
-                binding.rvRockets.visibility = View.VISIBLE
-            } else
-                Handler(mainLooper).post {
-                    Toast.makeText(this, getString(R.string.error_msg), Toast.LENGTH_LONG).show()
+            when (it) {
+                is Response.Loading -> {
+                    binding.rvRockets.visibility = View.GONE
+                    binding.pbMain.visibility = View.VISIBLE
                 }
 
-            binding.pbMain.visibility = View.GONE
+                is Response.Success -> {
+                    if (it.data!!.isNotEmpty()) {
+                        rocketAdapter.submitList(it.data)
+                        binding.rvRockets.visibility = View.VISIBLE
+                    } else
+                        Handler(mainLooper).post {
+                            Toast.makeText(this, getString(R.string.error_msg), Toast.LENGTH_LONG)
+                                .show()
+                        }
+
+                    binding.pbMain.visibility = View.GONE
+                }
+
+                is Response.Error -> {
+                    binding.pbMain.visibility = View.GONE
+                    Handler(mainLooper).post {
+                        Toast.makeText(this, it.errorMessage, Toast.LENGTH_LONG).show()
+                    }
+                }
+
+            }
+
         }
     }
 

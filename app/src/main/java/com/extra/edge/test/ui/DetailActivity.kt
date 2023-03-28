@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.extra.edge.test.R
 import com.extra.edge.test.adapter.RocketImagesAdapter
 import com.extra.edge.test.databinding.ActivityDetailBinding
+import com.extra.edge.test.repository.Response
 import com.extra.edge.test.utils.Constants
 import com.extra.edge.test.viewmodel.DetailViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -53,17 +54,35 @@ class DetailActivity : AppCompatActivity() {
         detailViewModel.getRocketDetail(rocketId!!)
         detailViewModel.rocketDetail.observe(this@DetailActivity) {
 
-            if (it != null) {
-                supportActionBar?.title = it.name
-                binding.rocket = it
-                rocketImagesAdapter.submitList(it.flickerImages)
-                binding.groupDetail.visibility = View.VISIBLE
-            } else {
-                Handler(mainLooper).post {
-                    Toast.makeText(this, getString(R.string.error_msg), Toast.LENGTH_LONG).show()
+            when (it) {
+                is Response.Loading -> {
+                    binding.groupDetail.visibility = View.GONE
+                    binding.pbDetail.visibility = View.VISIBLE
+                }
+
+                is Response.Success -> {
+                    if (it.data != null) {
+                        supportActionBar?.title = it.data.name
+                        binding.rocket = it.data
+                        rocketImagesAdapter.submitList(it.data.flickerImages)
+                        binding.groupDetail.visibility = View.VISIBLE
+                    } else {
+                        Handler(mainLooper).post {
+                            Toast.makeText(this, getString(R.string.error_msg), Toast.LENGTH_LONG)
+                                .show()
+                        }
+                    }
+                    binding.pbDetail.visibility = View.GONE
+                }
+
+                is Response.Error -> {
+                    Handler(mainLooper).post {
+                        Toast.makeText(this, getString(R.string.error_msg), Toast.LENGTH_LONG)
+                            .show()
+                    }
+                    binding.pbDetail.visibility = View.GONE
                 }
             }
-            binding.pbDetail.visibility = View.GONE
         }
     }
 }

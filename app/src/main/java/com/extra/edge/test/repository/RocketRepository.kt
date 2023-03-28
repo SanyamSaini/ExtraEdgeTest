@@ -18,46 +18,55 @@ class RocketRepository @Inject constructor(@ApplicationContext val context: Cont
     @Inject
     lateinit var rocketApi: RocketApi
 
-    private val rocketLiveData = MutableLiveData<List<Rocket>>()
+    private val rocketLiveData = MutableLiveData<Response<List<Rocket>>>()
 
-    val rockets: LiveData<List<Rocket>>
+    val rockets: LiveData<Response<List<Rocket>>>
         get() = rocketLiveData
 
-    private val rocketDetailLiveData = MutableLiveData<Rocket>()
+    private val rocketDetailLiveData = MutableLiveData<Response<Rocket>>()
 
-    val rocketDetail: LiveData<Rocket>
+    val rocketDetail: LiveData<Response<Rocket>>
         get() = rocketDetailLiveData
 
     suspend fun getRockets() {
         if (NetworkUtils.isInternetConnected(context)) {
-            val result = rocketApi.getRockets()
-            if (result?.body() != null) {
-                rocketDatabase.rocketDao().addRocket(result.body()!!)
-                rocketLiveData.postValue(result.body())
+
+            try {
+                val result = rocketApi.getRockets()
+                if (result?.body() != null) {
+                    rocketDatabase.rocketDao().addRocket(result.body()!!)
+                    rocketLiveData.postValue(Response.Success(result.body()))
+                }
+            } catch (e: Exception) {
+                rocketLiveData.postValue(Response.Error(e.message.toString()))
             }
 
         } else {
             val rockets = rocketDatabase.rocketDao().getRockets()
-            rocketLiveData.postValue(rockets)
+            rocketLiveData.postValue(Response.Success(rockets))
         }
 
     }
 
     suspend fun getRocketDetail(id: String) {
         if (NetworkUtils.isInternetConnected(context)) {
-            val result = rocketApi.getRocketDetail(id)
-            if (result?.body() != null) {
-                rocketDetailLiveData.postValue(result.body())
+            try {
+                val result = rocketApi.getRocketDetail(id)
+                if (result?.body() != null) {
+                    rocketDetailLiveData.postValue(Response.Success(result.body()))
+                }
+            } catch (e: Exception) {
+                rocketDetailLiveData.postValue(Response.Error(e.message.toString()))
             }
 
         } else {
             val rockets = rocketDatabase.rocketDao().getRocketDetail(id)
-            rocketDetailLiveData.postValue(rockets)
+            rocketDetailLiveData.postValue(Response.Success(rockets))
         }
 
     }
 
-    suspend fun getRocketBackground(){
+    suspend fun getRocketBackground() {
         val result = rocketApi.getRockets()
         if (result?.body() != null) {
             rocketDatabase.rocketDao().addRocket(result.body()!!)
